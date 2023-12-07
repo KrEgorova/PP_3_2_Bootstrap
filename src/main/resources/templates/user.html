@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+      integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<header class="navbar sticky-top bg-dark flex-md-nowrap p-0 shadow" data-bs-theme="dark">
+    <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3 fs-6 text-white" href="/user">
+        <th:block th:text="${userName} + ' with roles: ' + ${userRoles}"></th:block>
+    </a>
+    <ul class="navbar-nav flex-row d-md-none">
+        <li class="nav-item text-nowrap">
+            <button class="nav-link px-3 text-white" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarSearch" aria-controls="navbarSearch" aria-expanded="false"
+                    aria-label="Toggle search">
+                <svg class="bi">
+                    <use xlink:href="#search"></use>
+                </svg>
+            </button>
+        </li>
+        <li class="nav-item text-nowrap">
+            <button class="nav-link px-3 text-white" type="button" data-bs-toggle="offcanvas"
+                    data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false"
+                    aria-label="Toggle navigation">
+                <svg class="bi">
+                    <use xlink:href="#list"></use>
+                </svg>
+            </button>
+        </li>
+    </ul>
+    <div id="navbarSearch" class="navbar-search w-100 collapse">
+        <input class="form-control w-100 rounded-0 border-0" type="text" placeholder="Search" aria-label="Search">
+    </div>
+    <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3 fs-6 text-white" href="/logout">Logout</a>
+</header>
+<body>
+<div class="row">
+    <div class="sidebar border border-right col-md-3 col-lg-2 p-0 bg-body-tertiary">
+        <div class="offcanvas-md offcanvas-end bg-body-tertiary" tabindex="-1" id="sidebarMenu"
+             aria-labelledby="sidebarMenuLabel">
+            <div class="btn-group-vertical">
+                <br>
+                <ul class="nav flex-column">
+                    <a th:if="${hasRoleAdmin}" href="/admin" class="btn btn-light" role="button">Admin</a>
+
+                    <a href="/user" class="btn btn-primary" role="button">User</a>
+                    <li class="nav-item">
+                        <canvas class="my-4 w-100" id="myChart" width="521" height="500"
+                                style="display: block; box-sizing: border-box; height: 500px; width: 521px;"></canvas>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+        <br>
+        <h1>User information-page</h1>
+        <br>
+        <h4>About user</h4>
+        <div class="table-responsive small">
+            <table class="table table-striped" style="font-size: 19px;">
+                <thead>
+                <tr>
+                    <th> ID</th>
+                    <th> Username</th>
+                    <th> Age</th>
+                    <th> City</th>
+                    <th> Role</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:object="${user}" th:method="GET">
+                    <td th:text="${user.getId()}" id="id"></td>
+                    <td th:text="${user.getUsername()}" id="username"></td>
+                    <td th:text="${user.getAge()}" id="userAge"></td>
+                    <td th:text="${user.getCity()}" id="userCity"></td>
+                    <td th:text="${#strings.toUpperCase(user.getRoles()).replaceAll('ROLE_', '').replace('[', '').replace(']', '')}"
+                        id="userRoles"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </main>
+</div>
+</body>
+</html>
